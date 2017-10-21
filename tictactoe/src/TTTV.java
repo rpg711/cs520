@@ -57,6 +57,8 @@ public class TTTV implements TicTacToeView {
         }
         
         reset.addActionListener(control);
+        
+        gui.setVisible(true);
 	}
 
 	@Override
@@ -95,9 +97,21 @@ public class TTTV implements TicTacToeView {
 		}
 		else if(data.getWinner().equals("1")){
 			playerturn.setText("Player 1 wins!");
+			// disable all buttons
+			for(int row = 0;row<3;row++) {
+	            for(int column = 0;column<3;column++) {
+	            	blocks[row][column].setEnabled(false);
+	            }
+	        }
 		}
 		else if (data.getWinner().equals("2")){
 			playerturn.setText("Player 2 wins!");
+			// disable all buttons
+			for(int row = 0;row<3;row++) {
+	            for(int column = 0;column<3;column++) {
+	            	blocks[row][column].setEnabled(false);
+	            }
+	        }
 		}
 		
 		// no winner and no moves left
