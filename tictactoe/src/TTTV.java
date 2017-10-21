@@ -24,7 +24,7 @@ public class TTTV implements TicTacToeView {
     public JTextArea playerturn= new JTextArea();
 
 	
-	public TTTV(TicTacToeController controller){
+	public TTTV(ActionListener control){
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setSize(new Dimension(500, 350));
         gui.setResizable(true);
@@ -43,46 +43,23 @@ public class TTTV implements TicTacToeView {
         gui.add(messages, BorderLayout.SOUTH);
 
         messages.add(playerturn);
+        
+        reset.setActionCommand("reset");
 
-        reset.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controller.reset();
-            }
-        });
+        reset.addActionListener(control);
         
         for(int row = 0; row<3 ;row++) {
             for(int column = 0; column<3 ;column++) {
                 blocks[row][column] = new JButton();
                 blocks[row][column].setPreferredSize(new Dimension(75,75));
                 blocks[row][column].setText("");
+                blocks[row][column].setActionCommand("make_move," + row + "," + column);
                 game.add(blocks[row][column]);
-                blocks[row][column].addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                    	int move_x = -1;
-                    	int move_y = -1;
-                    	
-                    	for (int i = 0; i < blocks.length; i++){
-                    		for(int j = 0; j < blocks[0].length; j++){
-                    			if (e.getSource() == blocks[i][j])
-                    			{
-                    				move_x = i;
-                    				move_y = j;
-                    				break;
-                    			}
-                    		}
-                    	}
-                    	
-                        controller.moveOccured(new TicTacToeMove(move_x, move_y));
-                    }
-                });
+                blocks[row][column].addActionListener(control);
             }
         }
         
-        reset.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controller.reset();
-            }
-        });
+        reset.addActionListener(control);
 	}
 
 	@Override
@@ -133,7 +110,7 @@ public class TTTV implements TicTacToeView {
 			playerturn.setText("Game ends in a draw");
 		}
 		
-		if(data.getWinner().equals("0") && movesLeft == data.getGrid().length * data.getGrid()[0].length)
+		if(movesLeft == data.getGrid().length * data.getGrid()[0].length)
 			playerturn.setText("Player " + Integer.toString(data.getPlayer()) + " to play 'X'");
 	}
 

@@ -1,4 +1,9 @@
-
+// model associations:
+// player 1: x
+// player 2: y
+// winner 1: x
+// winner 0: none
+// winner 2: y
 public interface TicTacToeModel {
 	
 	// make a move.
