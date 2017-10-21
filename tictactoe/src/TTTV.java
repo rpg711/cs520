@@ -13,10 +13,7 @@ import javax.swing.JTextArea;
 
 
 public class TTTV implements TicTacToeView {
-	
-	private int player;
     private int movesLeft;
-    
     
 	public JFrame gui = new JFrame("Tic Tac Toe");
     public JButton[][] blocks = new JButton[3][3];
@@ -65,7 +62,6 @@ public class TTTV implements TicTacToeView {
 	@Override
 	public void update(TTTData data) {
 		movesLeft = data.getMovesleft();
-		player = data.getPlayer();
 		
 		// populate new data
 		for(int row = 0;row<3;row++) {
