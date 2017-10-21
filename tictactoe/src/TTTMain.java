@@ -3,10 +3,9 @@ public class TTTMain {
 	public static void main(String[] args){
 		TTTC controller = new TTTC();
 		TTTV view = new TTTV(controller);
-		TTTM model = new TTTM();
+		TTTM model = new TTTM(view);
 		
 		controller.setModel(model);
-		model.setView(view);
 		
 		view.gui.setVisible(true);
 	}

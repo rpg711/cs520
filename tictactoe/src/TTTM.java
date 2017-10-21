@@ -5,8 +5,9 @@ public class TTTM implements TicTacToeModel {
 	private TicTacToeView view;
 	private String winner = "0";
 	
-	public TTTM()
+	public TTTM(TicTacToeView view)
 	{
+		this.view = view;
 		resetModel();
 	}
 
@@ -58,12 +59,6 @@ public class TTTM implements TicTacToeModel {
 	
 	public int[][] getGrid(){
 		return grid;
-	}
-
-	@Override
-	public void setView(TicTacToeView view) {
-		this.view = view;
-		updateView();
 	}
 
 	@Override

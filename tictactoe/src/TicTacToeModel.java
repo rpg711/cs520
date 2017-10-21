@@ -8,8 +8,6 @@ public interface TicTacToeModel {
 	// reset model to default
 	public void resetModel();
 	
-	public void setView(TicTacToeView view);
-	
 	public int[][] getGrid();
 	
 	// this method sets the current winner and updates the view

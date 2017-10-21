@@ -43,7 +43,6 @@ public class TTTV implements TicTacToeView {
         gui.add(messages, BorderLayout.SOUTH);
 
         messages.add(playerturn);
-        playerturn.setText("Player 1 to play 'X'");
 
         reset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -78,6 +77,12 @@ public class TTTV implements TicTacToeView {
                 });
             }
         }
+        
+        reset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.reset();
+            }
+        });
 	}
 
 	@Override
@@ -95,8 +100,13 @@ public class TTTV implements TicTacToeView {
             	}
             	else if (data.getGrid()[row][column] == 2)
             	{
-            		blocks[row][column].setText("Y");
+            		blocks[row][column].setText("O");
             		blocks[row][column].setEnabled(false);
+            	}
+            	else if (data.getGrid()[row][column] == 0)
+            	{
+            		blocks[row][column].setText("");
+            		blocks[row][column].setEnabled(true);
             	}
             }
         }
@@ -122,6 +132,9 @@ public class TTTV implements TicTacToeView {
 		{
 			playerturn.setText("Game ends in a draw");
 		}
+		
+		if(data.getWinner().equals("0") && movesLeft == data.getGrid().length * data.getGrid()[0].length)
+			playerturn.setText("Player " + Integer.toString(data.getPlayer()) + " to play 'X'");
 	}
 
 }
