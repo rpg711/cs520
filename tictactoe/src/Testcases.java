@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * An example test class, which merely shows how to write JUnit tests.
+ * Testcases for the model, view, and controller.
  */
 public class Testcases {    
 	public class MockModel implements TicTacToeModel
@@ -79,7 +79,7 @@ public class Testcases {
     
     @Test
     public void testControllerUpdatePlayer2Wins() {
-TTTC controller = new TTTC();
+    	TTTC controller = new TTTC();
     	
     	int[][] grid = new int[][] {{1,1,0},{2,2,2},{1,0,0}};
     	

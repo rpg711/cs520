@@ -12,14 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 
-public class TTTV implements TicTacToeView {
-    private int movesLeft;
-    
+public class TTTV implements TicTacToeView {    
 	public JFrame gui = new JFrame("Tic Tac Toe");
     public JButton[][] blocks = new JButton[3][3];
     public JButton reset = new JButton("Reset");
     public JTextArea playerturn= new JTextArea();
-
 	
 	public TTTV(ActionListener control){
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +47,7 @@ public class TTTV implements TicTacToeView {
                 blocks[row][column] = new JButton();
                 blocks[row][column].setPreferredSize(new Dimension(75,75));
                 blocks[row][column].setText("");
-                blocks[row][column].setActionCommand("make_move," + row + "," + column);
+                blocks[row][column].setActionCommand("make_move," + row + "," + column); // assign button actions their respective row,col indexes
                 game.add(blocks[row][column]);
                 blocks[row][column].addActionListener(control);
             }
@@ -62,9 +59,7 @@ public class TTTV implements TicTacToeView {
 	}
 
 	@Override
-	public void update(TTTData data) {
-		movesLeft = data.getMovesleft();
-		
+	public void update(TTTData data) {		
 		// populate new data
 		for(int row = 0;row<3;row++) {
             for(int column = 0;column<3;column++) {
@@ -88,7 +83,7 @@ public class TTTV implements TicTacToeView {
 		
 		// set the turn if no winner
 		if(data.getWinner().equals("0")){
-			if (movesLeft % 2 == 1){
+			if (data.getMovesleft() % 2 == 1){
 				playerturn.setText("'X': Player 1");
 			} else
 			{
@@ -115,12 +110,12 @@ public class TTTV implements TicTacToeView {
 		}
 		
 		// no winner and no moves left
-		if(data.getWinner().equals("0") && movesLeft == 0)
+		if(data.getWinner().equals("0") && data.getMovesleft() == 0)
 		{
 			playerturn.setText("Game ends in a draw");
 		}
 		
-		if(movesLeft == data.getGrid().length * data.getGrid()[0].length)
+		if(data.getMovesleft() == data.getGrid().length * data.getGrid()[0].length)
 			playerturn.setText("Player " + Integer.toString(data.getPlayer()) + " to play 'X'");
 	}
 

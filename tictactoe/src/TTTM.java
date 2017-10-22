@@ -1,4 +1,6 @@
 // models a 3x3 tictactoe grid game
+// In this project's specific implementation, it is assumed that
+// 	player 1 (x) will move first, and that the grid is 3x3.
 public class TTTM implements TicTacToeModel {
 	private int grid[][]; // 0 : no move; 1: player 1; 2: player 2;
 	private int player;
@@ -66,6 +68,7 @@ public class TTTM implements TicTacToeModel {
 	public void setData(TTTData data) {
 		this.grid = data.getGrid();
 		this.player = data.getPlayer();
+		this.winner = data.getWinner();
 		updateView();
 	}
 	
