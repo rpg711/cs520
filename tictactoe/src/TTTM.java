@@ -44,6 +44,7 @@ public class TTTM implements TicTacToeModel {
 	@Override
 	public void resetModel() {
 		this.grid = new int[3][3];
+		this.winner = "0";
 		
 		for (int i = 0; i < grid.length; i ++){
 			for (int j = 0; j < grid[i].length; j++){

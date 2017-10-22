@@ -5,6 +5,9 @@ public class TTTC implements TicTacToeController {
 
 	@Override
 	public void moveOccured(TicTacToeMove move) {
+		if (this.model.getGrid()[move.getX()][move.getY()] != 0)
+			throw new MoveOccurredException("Illegal move, move has already occured");
+		
 		this.model.makeMove(move);
 		model.setWinner(checkWinner());
 	}
