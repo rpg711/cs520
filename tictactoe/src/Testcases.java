@@ -8,39 +8,84 @@ import static org.junit.Assert.*;
  * An example test class, which merely shows how to write JUnit tests.
  */
 public class Testcases {    
+	public class MockModel implements TicTacToeModel
+	{
+		private int grid [][];
+		public MockModel(int[][] grid)
+		{
+			this.grid = grid;
+		}
+		
+		@Override
+		public void makeMove(TicTacToeMove move) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void resetModel() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public int[][] getGrid() {
+			return grid;
+		}
+
+		@Override
+		public void setWinner(String winner) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void setData(TTTData data) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public int movesLeft() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		
+	}
+	
+	public class MockView implements TicTacToeView
+	{
+
+		@Override
+		public void update(TTTData data) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
     @Test
     public void testControllerUpdatePlayer1Wins() {
     	TTTC controller = new TTTC();
-		ActionListener controller_listener = new ControllerActionListenerAdapter(controller);
-		TTTV view = new TTTV(controller_listener);
-		TTTM model = new TTTM(view);
+    	
+    	int[][] grid = new int[][] {{1,1,1},{0,2,2},{0,0,0}};
+    	
+		TicTacToeModel model = new MockModel(grid);
 		
 		controller.setModel(model);
-		
-		controller.moveOccured(new TicTacToeMove(0,0));
-		controller.moveOccured(new TicTacToeMove(1,0));
-		controller.moveOccured(new TicTacToeMove(0,1));
-		controller.moveOccured(new TicTacToeMove(2,0));
-		controller.moveOccured(new TicTacToeMove(0,2));
 		
 		assertEquals("1", controller.checkWinner()); 
     }
     
     @Test
     public void testControllerUpdatePlayer2Wins() {
-    	TTTC controller = new TTTC();
-		ActionListener controller_listener = new ControllerActionListenerAdapter(controller);
-		TTTV view = new TTTV(controller_listener);
-		TTTM model = new TTTM(view);
+TTTC controller = new TTTC();
+    	
+    	int[][] grid = new int[][] {{1,1,0},{2,2,2},{1,0,0}};
+    	
+		TicTacToeModel model = new MockModel(grid);
 		
 		controller.setModel(model);
-		
-		controller.moveOccured(new TicTacToeMove(1,0));
-		controller.moveOccured(new TicTacToeMove(0,0));
-		controller.moveOccured(new TicTacToeMove(2,0));
-		controller.moveOccured(new TicTacToeMove(0,1));
-		controller.moveOccured(new TicTacToeMove(1,1));
-		controller.moveOccured(new TicTacToeMove(0,2));
 		
 		assertEquals("2", controller.checkWinner()); 
     }
@@ -48,21 +93,12 @@ public class Testcases {
     @Test
     public void testControllerUpdateNobodyWins() {
     	TTTC controller = new TTTC();
-		ActionListener controller_listener = new ControllerActionListenerAdapter(controller);
-		TTTV view = new TTTV(controller_listener);
-		TTTM model = new TTTM(view);
+    	
+    	int[][] grid = new int[][] {{1,2,1},{2,2,1},{1,1,2}};
+    	
+		TicTacToeModel model = new MockModel(grid);
 		
 		controller.setModel(model);
-		
-		controller.moveOccured(new TicTacToeMove(0,0));
-		controller.moveOccured(new TicTacToeMove(0,1));
-		controller.moveOccured(new TicTacToeMove(0,2));
-		controller.moveOccured(new TicTacToeMove(1,1));
-		controller.moveOccured(new TicTacToeMove(1,0));
-		controller.moveOccured(new TicTacToeMove(1,2));
-		controller.moveOccured(new TicTacToeMove(2,1));
-		controller.moveOccured(new TicTacToeMove(2,0));
-		controller.moveOccured(new TicTacToeMove(2,2));
 		
 		assertEquals("0", controller.checkWinner()); 
     }
@@ -70,19 +106,19 @@ public class Testcases {
     @Test(expected = MoveOccurredException.class)
     public void testControllerMoveOccurredError() {
     	TTTC controller = new TTTC();
-		ActionListener controller_listener = new ControllerActionListenerAdapter(controller);
-		TTTV view = new TTTV(controller_listener);
-		TTTM model = new TTTM(view);
+    	
+    	int[][] grid = new int[][] {{1,0,0},{0,0,0},{0,0,0}};
+    	
+		TicTacToeModel model = new MockModel(grid);
 		
 		controller.setModel(model);
 		
-		controller.moveOccured(new TicTacToeMove(0,0));
 		controller.moveOccured(new TicTacToeMove(0,0));
     }
     
     @Test
     public void testModelUpdate() {
-		TTTV view = new TTTV(null);
+		TicTacToeView view = new MockView();
 		TTTM model = new TTTM(view);
 		
 		int[][] mockgrid = new int[][]{{1,1,1},{2,0,2},{2,0,0}};
@@ -100,7 +136,7 @@ public class Testcases {
     
     @Test
     public void testModelReset() {
-		TTTV view = new TTTV(null);
+    	TicTacToeView view = new MockView();
 		TTTM model = new TTTM(view);
 		
 		// populate with fake data
