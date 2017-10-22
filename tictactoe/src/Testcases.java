@@ -10,10 +10,10 @@ import static org.junit.Assert.*;
 public class Testcases {    
     @Test
     public void testControllerUpdatePlayer1Wins() {
-    	TicTacToeController controller = new TTTC();
+    	TTTC controller = new TTTC();
 		ActionListener controller_listener = new ControllerActionListenerAdapter(controller);
-		TicTacToeView view = new TTTV(controller_listener);
-		TicTacToeModel model = new TTTM(view);
+		TTTV view = new TTTV(controller_listener);
+		TTTM model = new TTTM(view);
 		
 		controller.setModel(model);
 		
@@ -23,15 +23,15 @@ public class Testcases {
 		controller.moveOccured(new TicTacToeMove(2,0));
 		controller.moveOccured(new TicTacToeMove(0,2));
 		
-		assertEquals(controller.checkWinner(), "1"); 
+		assertEquals("1", controller.checkWinner()); 
     }
     
     @Test
     public void testControllerUpdatePlayer2Wins() {
-    	TicTacToeController controller = new TTTC();
+    	TTTC controller = new TTTC();
 		ActionListener controller_listener = new ControllerActionListenerAdapter(controller);
-		TicTacToeView view = new TTTV(controller_listener);
-		TicTacToeModel model = new TTTM(view);
+		TTTV view = new TTTV(controller_listener);
+		TTTM model = new TTTM(view);
 		
 		controller.setModel(model);
 		
@@ -42,15 +42,15 @@ public class Testcases {
 		controller.moveOccured(new TicTacToeMove(1,1));
 		controller.moveOccured(new TicTacToeMove(0,2));
 		
-		assertEquals(controller.checkWinner(), "2"); 
+		assertEquals("2", controller.checkWinner()); 
     }
     
     @Test
     public void testControllerUpdateNobodyWins() {
-    	TicTacToeController controller = new TTTC();
+    	TTTC controller = new TTTC();
 		ActionListener controller_listener = new ControllerActionListenerAdapter(controller);
-		TicTacToeView view = new TTTV(controller_listener);
-		TicTacToeModel model = new TTTM(view);
+		TTTV view = new TTTV(controller_listener);
+		TTTM model = new TTTM(view);
 		
 		controller.setModel(model);
 		
@@ -60,8 +60,8 @@ public class Testcases {
 		controller.moveOccured(new TicTacToeMove(1,1));
 		controller.moveOccured(new TicTacToeMove(1,0));
 		controller.moveOccured(new TicTacToeMove(1,2));
-		controller.moveOccured(new TicTacToeMove(2,0));
 		controller.moveOccured(new TicTacToeMove(2,1));
+		controller.moveOccured(new TicTacToeMove(2,0));
 		controller.moveOccured(new TicTacToeMove(2,2));
 		
 		assertEquals("0", controller.checkWinner()); 
@@ -69,10 +69,10 @@ public class Testcases {
     
     @Test(expected = MoveOccurredException.class)
     public void testControllerMoveOccurredError() {
-    	TicTacToeController controller = new TTTC();
+    	TTTC controller = new TTTC();
 		ActionListener controller_listener = new ControllerActionListenerAdapter(controller);
-		TicTacToeView view = new TTTV(controller_listener);
-		TicTacToeModel model = new TTTM(view);
+		TTTV view = new TTTV(controller_listener);
+		TTTM model = new TTTM(view);
 		
 		controller.setModel(model);
 		
@@ -82,8 +82,8 @@ public class Testcases {
     
     @Test
     public void testModelUpdate() {
-		TicTacToeView view = new TTTV(null);
-		TicTacToeModel model = new TTTM(view);
+		TTTV view = new TTTV(null);
+		TTTM model = new TTTM(view);
 		
 		int[][] mockgrid = new int[][]{{1,1,1},{2,0,2},{2,0,0}};
 		
@@ -93,15 +93,15 @@ public class Testcases {
 		
 		for (int i = 0; i < 3; i ++){
 			for (int j = 0; j < 3; j ++){
-				assertEquals(grid[i][j], mockgrid[i][j]);
+				assertEquals(mockgrid[i][j], grid[i][j]);
 			}
 		}
     }
     
     @Test
     public void testModelReset() {
-		TicTacToeView view = new TTTV(null);
-		TicTacToeModel model = new TTTM(view);
+		TTTV view = new TTTV(null);
+		TTTM model = new TTTM(view);
 		
 		// populate with fake data
 		
@@ -113,7 +113,7 @@ public class Testcases {
 		
 		for (int i = 0; i < 3; i ++){
 			for (int j = 0; j < 3; j ++){
-				assertEquals(grid[i][j], mockgrid[i][j]);
+				assertEquals(mockgrid[i][j], grid[i][j]);
 			}
 		}
 		
@@ -125,13 +125,97 @@ public class Testcases {
 		
 		for (int i = 0; i < 3; i ++){
 			for (int j = 0; j < 3; j ++){
-				assertEquals(grid[i][j], 0);
+				assertEquals(0, grid[i][j]);
 			}
 		}
     }
     
     @Test
-    public void testViewUpdate() {
-    	
+    public void testViewUpdateNegative() {
+    	// see if view works with bad data
+    	int[][] mockgrid = new int[][]{{1,1,1},{1,1,1},{1,1,1}};
+		
+		TTTData d = new TTTData("1", mockgrid, 1, 3);
+		
+		TTTV view = new TTTV(null);
+		
+		view.update(d);
+		
+		for (int i = 0; i < 3; i ++){
+			for (int j = 0; j < 3; j ++){
+				assertEquals(view.blocks[i][j].getText(), "X");
+			}
+		}
+		
+		assertEquals("Player 1 wins!", view.playerturn.getText());
+    }
+    
+    @Test
+    public void testViewUpdateSimple() {
+    	// see if view works with regular data
+    	int[][] mockgrid = new int[][]{{1,1,1},{0,2,2},{0,0,0}};
+		
+		TTTData d = new TTTData("1", mockgrid, 1, 4);
+		
+		TTTV view = new TTTV(null);
+		
+		view.update(d);
+		
+		for (int i = 0; i < 3; i ++){
+			for (int j = 0; j < 3; j ++){
+				switch(mockgrid[i][j]){
+				case 0:
+					assertEquals("", view.blocks[i][j].getText());
+					break;
+				case 1:
+					assertEquals("X", view.blocks[i][j].getText());
+					break;
+				case 2:
+					assertEquals("O", view.blocks[i][j].getText());
+					break;
+				}
+				
+			}
+		}
+		
+		assertEquals("Player 1 wins!", view.playerturn.getText());
+    }
+    
+    @Test
+    public void testViewReset() {
+    	// populate with some data
+    	int[][] mockgrid = new int[][]{{1,1,1},{0,2,2},{0,0,0}};
+		
+		TTTData d = new TTTData("1", mockgrid, 1, 4);
+		
+		TTTV view = new TTTV(null);
+		
+		view.update(d);
+		
+		for (int i = 0; i < 3; i ++){
+			for (int j = 0; j < 3; j ++){
+				switch(mockgrid[i][j]){
+				case 0:
+					assertEquals("", view.blocks[i][j].getText());
+					break;
+				case 1:
+					assertEquals("X", view.blocks[i][j].getText());
+					break;
+				case 2:
+					assertEquals("O", view.blocks[i][j].getText());
+					break;
+				}
+				
+			}
+		}
+		
+		assertEquals("Player 1 wins!", view.playerturn.getText());
+		
+		mockgrid = new int[][]{{0,0,0},{0,0,0},{0,0,0}};
+		d = new TTTData("0", mockgrid, 1, 9);
+		
+		view.update(d);
+		
+		assertEquals("Player 1 to play 'X'", view.playerturn.getText());
     }
 }
